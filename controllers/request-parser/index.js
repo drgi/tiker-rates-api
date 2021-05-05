@@ -9,6 +9,12 @@ const parseAndValidateStringRequest = ({ pairs }) => {
 };
 
 const parseAndVailidateArrRequest = (pairs) => {
+  if (!pairs) throw new Error('No requested fields in request');
+  if (!Array.isArray(pairs)) throw new Error('pairs must be Array');
+  pairs.forEach((p) => {
+    if (!_pairValidator(p))
+      throw new Error(`One of request params have invalid format ${p}`);
+  });
   return pairs;
 };
 const _pairValidator = (str) => {

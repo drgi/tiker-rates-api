@@ -21,13 +21,16 @@ router.get('/rates', async (req, res, next) => {
   }
 });
 
-router.post('/rates', async (req, res) => {
-  console.log('Rates Post POST', req.body);
-  const { pairs } = req.body;
-  const parsedPairs = parseAndVailidateArrRequest(pairs);
-  const instOfPair = await getPriceForPairs(parsedPairs);
-  const responce = getParsedResponse(instOfPair);
-  res.status(200).json(responce);
+router.post('/rates', async (req, res, next) => {
+  try {
+    const { pairs } = req.body;
+    const parsedPairs = parseAndVailidateArrRequest(pairs);
+    const instOfPair = await getPriceForPairs(parsedPairs);
+    const responce = getParsedResponse(instOfPair);
+    res.status(200).json(responce);
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;
