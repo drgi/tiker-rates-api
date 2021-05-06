@@ -4,13 +4,13 @@ class PriceRequest {
   constructor(pair) {
     this.pair = pair;
     this.pairForReq = pair.split('-').join('');
-    this.reqToBinance = reqToBinance;
+    this.reqToBinance = reqToBinance.get.bind(this, '', {
+      params: { symbol: this.pairForReq },
+    });
     this.price = null;
   }
   async requestPrice() {
-    const res = await this.reqToBinance.get('', {
-      params: { symbol: this.pairForReq },
-    });
+    const res = await this.reqToBinance();
     const { data } = res;
     this.price = Number(data.price);
   }
