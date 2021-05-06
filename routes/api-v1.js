@@ -11,7 +11,6 @@ const { getParsedResponse } = require('../controllers/response');
 router.get('/rates', async (req, res, next) => {
   try {
     const { query } = req;
-    console.log('/rates', query);
     const pairs = parseAndValidateStringRequest(query);
     const instOfPair = await getPriceForPairs(pairs);
     const responce = getParsedResponse(instOfPair);

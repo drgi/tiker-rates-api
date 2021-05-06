@@ -7,12 +7,13 @@ const rates = require('./routes/api-v1');
 app.use('/api/v1/', rates);
 
 //Error handler
+const { errorHandler } = require('./controllers/errorHandler');
 app.use((err, req, res, next) => {
-  console.log('Error handler', err);
-  if (!err) {
+  const error = errorHandler(err);
+  if (!error) {
     return res.status(500).json({ error: 'Uknown server error:)))))' });
   }
-  res.status(400).json({ error: err.message });
+  res.status(error.code).json({ error: error.message });
 });
 
 module.exports = app;
