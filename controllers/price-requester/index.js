@@ -3,9 +3,9 @@ const AxiosNetworkError = require('./axiosError');
 const getPriceForPairs = async (pairs) => {
   try {
     const instOfPair = pairs.map((p) => new PriceRequest(p));
-    for (let i = 0; i < instOfPair.length; i++) {
-      await instOfPair[i].requestPrice();
-    }
+    const promises = [];
+    instOfPair.forEach((p) => promises.push(p.requestPrice()));
+    await Promise.all(promises);
     return instOfPair;
   } catch (err) {
     if (err.isAxiosError) {

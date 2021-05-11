@@ -26,7 +26,7 @@ const parseAndVailidateArrRequest = (pairs) => {
   return pairs;
 };
 const _pairValidator = (str) => {
-  return /[A-Z]*-[A-Z]*/.test(str);
+  return /[A-Z]{3,}\-[A-Z]{3,}/.test(str);
 };
 
 const throwValidationError = (code, message) => {
